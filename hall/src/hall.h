@@ -5,6 +5,11 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
+HALL room[4];
+
+typedef struct hall
+{
+  char** place;
+}HALL;
 
 #endif
-
