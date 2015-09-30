@@ -12,4 +12,6 @@ typedef struct hall
   char** place;
 }HALL;
 
+HALL initHall(int i);
+
 #endif
