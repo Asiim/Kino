@@ -1,0 +1,17 @@
+Move Admin Tests:
+~~  - Alociraj memoriju~~
+~~  - Unesi ime filma~~
+  ~~  - Prazno ime~~
+  ~~  - Ime van opsega~~
+~~    - Ime unutar opsega~~
+  - Unesi termin filma
+    - Prazan termin
+    - Termin van opsega
+    - Termin unutar opsega
+    - Unos neregularnih znakova
+  - Unesi salu za film
+    - Prazna sala
+    - Sala van opsega
+    - Sala unutar opsega
+    - Unos neregularnih znakova
+  - Oslobodi memoriju

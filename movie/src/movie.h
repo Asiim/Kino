@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <inttypes.h>
+#include <string.h>
 
 
 typedef struct movie
@@ -14,4 +15,5 @@ typedef struct movie
 } MOVIE;
 
 MOVIE* initMovie();
+int insertName(MOVIE*,char*);
 #endif
