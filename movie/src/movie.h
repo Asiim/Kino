@@ -16,4 +16,5 @@ typedef struct movie
 
 MOVIE* initMovie();
 int insertName(MOVIE*,char*);
+int insertTermin(MOVIE*,char*);
 #endif

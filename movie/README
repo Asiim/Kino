@@ -4,11 +4,13 @@ Move Admin Tests:
   ~~  - Prazno ime~~
   ~~  - Ime van opsega~~
 ~~    - Ime unutar opsega~~
-  - Unesi termin filma
-    - Prazan termin
-    - Termin van opsega
-    - Termin unutar opsega
-    - Unos neregularnih znakova
+~~  - Unesi termin filma~~
+    ~~- Prazan termin~~
+    ~~- Termin van opsega~~
+      ~~- Termin poslije 00:00~~
+      ~~- Termin prije 12:00~~
+    ~~- Termin unutar opsega~~
+    ~~- Unos neregularnih znakova~~
   - Unesi salu za film
     - Prazna sala
     - Sala van opsega
