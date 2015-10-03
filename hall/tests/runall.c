@@ -2,7 +2,8 @@
 
 static void RunAllTests(void)
 {
-	RUN_TEST_GROUP(HallTests);
+	RUN_TEST_GROUP(HallTestsTake);
+	RUN_TEST_GROUP(HallTestsFree);
 }
 
 int main(int argc,char* argv[])
