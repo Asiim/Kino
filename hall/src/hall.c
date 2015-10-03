@@ -7,28 +7,28 @@ void initHall()
 
 void takeOnePlace(uint8_t room,uint8_t row,uint8_t column)
 {
-  hall[room][row][column]='x';
+  hall[room][row][column]=TAKEN;
 }
 
 void takeAllPlaces()
 {
-    int i,j,k;
-    for(i=0;i<4;i++)
-      for(j=0;j<10;j++)
-        for(k=0;k<12;k++)
-          takeOnePlace(i,j,k);
+  int hall,row,column;
+  for(hall=0;hall<4;hall++)
+    for(row=0;row<10;row++)
+      for(column=0;column<12;column++)
+        takeOnePlace(hall,row,column);
 }
 
 void freeOnePlace(uint8_t room,uint8_t row,uint8_t column)
 {
-  hall[room][row][column]='O';
+  hall[room][row][column]=FREE;
 }
 
 void freeAllPlaces()
 {
-      int i,j,k;
-      for(i=0;i<4;i++)
-        for(j=0;j<10;j++)
-          for(k=0;k<12;k++)
-            freeOnePlace(i,j,k);
+      int hall,row,column;
+      for(hall=0;hall<4;hall++)
+        for(row=0;row<10;row++)
+          for(column=0;column<12;column++)
+            freeOnePlace(hall,row,column);
 }
