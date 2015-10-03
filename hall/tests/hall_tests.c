@@ -104,6 +104,9 @@ TEST_GROUP_RUNNER(HallTestsTake)
   RUN_TEST_CASE(HallTestsTake,TestTakeColumnOutOfBounds);
   RUN_TEST_CASE(HallTestsTake,TestTakeRandomPlace);
   RUN_TEST_CASE(HallTestsTake,TestPlaceAlreadyTaken);
+  RUN_TEST_CASE(HallTestsTake,TestTakeMorePlaces);
+  RUN_TEST_CASE(HallTestsTake,TestTakeMorePlacesThenColumns);
+  RUN_TEST_CASE(HallTestsTake,TestTakeNegativeNumberOfPlaces);
 }
 TEST_GROUP_RUNNER(HallTestsFree)
 {
@@ -114,6 +117,9 @@ TEST_GROUP_RUNNER(HallTestsFree)
   RUN_TEST_CASE(HallTestsFree,TestFreeColumnOutOfBounds);
   RUN_TEST_CASE(HallTestsFree,TestFreeRandomPlace);
   RUN_TEST_CASE(HallTestsFree,TestPlaceAlreadyFree);
+  RUN_TEST_CASE(HallTestsFree,TestFreeMorePlaces);
+  RUN_TEST_CASE(HallTestsFree,TestFreeMorePlacesThenColumns);
+  RUN_TEST_CASE(HallTestsFree,TestFreeNegativeNumberOfPlaces);
 }
 
 TEST_SETUP(HallTestsTake)
@@ -211,4 +217,34 @@ TEST(HallTestsFree,TestPlaceAlreadyFree)
 {
   freeAllPlaces();
   TEST_ASSERT_EQUAL_INT8(1,freeOnePlace(0,0,0));
+}
+
+TEST(HallTestsTake,TestTakeMorePlaces)
+{
+  TEST_ASSERT_EQUAL_INT8(0,takeMorePlaces(5));
+}
+
+TEST(HallTestsTake,TestTakeMorePlacesThenColumns)
+{
+  TEST_ASSERT_EQUAL_INT8(0,takeMorePlaces(20));
+}
+
+TEST(HallTestsTake,TestTakeNegativeNumberOfPlaces)
+{
+  TEST_ASSERT_EQUAL_INT8(1,takeMorePlaces(-15));
+}
+
+TEST(HallTestsFree,TestFreeMorePlaces)
+{
+  TEST_ASSERT_EQUAL_INT8(0,freeMorePlaces(5));
+}
+
+TEST(HallTestsFree,TestFreeMorePlacesThenColumns)
+{
+  TEST_ASSERT_EQUAL_INT8(0,freeMorePlaces(20));
+}
+
+TEST(HallTestsFree,TestFreeNegativeNumberOfPlaces)
+{
+  TEST_ASSERT_EQUAL_INT8(1,freeMorePlaces(-15));
 }
