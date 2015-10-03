@@ -7,6 +7,9 @@
 
 char hall[4][10][12];
 
-char initHall();
-
+void initHall();
+void takeOnePlace(uint8_t,uint8_t,uint8_t);
+void takeAllPlaces();
+void freeOnePlace(uint8_t,uint8_t,uint8_t);
+void freeAllPlaces();
 #endif
