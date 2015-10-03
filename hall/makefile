@@ -1,8 +1,14 @@
 CC=gcc
 
-all: hall.o
+all: src tests build
 
-.PHONY: hall.o
+.PHONY: src tests build
 
-movie.o:
-	$(CC) -c hall.c -o ../build/hall.o
+src:
+	$(MAKE) -C src all
+
+tests:
+	$(MAKE) -C tests all
+
+build:
+	$(MAKE) -C build all

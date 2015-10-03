@@ -5,13 +5,8 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-HALL room[4];
+char hall[4][10][12];
 
-typedef struct hall
-{
-  char** place;
-}HALL;
-
-HALL initHall(int i);
+char initHall();
 
 #endif
