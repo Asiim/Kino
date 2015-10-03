@@ -2,32 +2,54 @@
 #include "../../unity/unity_fixture.h"
 #include "../src/hall.h"
 
+static int random2()
+{
+  time_t t;
+  srand((unsigned) time(&t));
+  return rand();
+}
 
-TEST_GROUP(HallTestsTake);
-TEST_GROUP(HallTestsFree);
+static int8_t roomOutOfBound(uint8_t room)
+{
+  if(room>=MAX_HALLS || room<0)
+  return 1;
+  else
+  return 0;
+}
+
+static int8_t rowOutOfBound(uint8_t row)
+{
+  if(row>=MAX_ROWS || row<0)
+  return 1;
+  else
+  return 0;
+}
+
+static int8_t columnOutOfBound(uint8_t column)
+{
+  if(column>=MAX_COLUMNS || column<0)
+  return 1;
+  else
+  return 0;
+}
+
 uint8_t helpFreeOnePlace(uint8_t room,uint8_t row,uint8_t column)
 {
-  if (room>=MAX_HALLS || room<0)
+  if (roomOutOfBound(room))
   {
-    time_t t;
-    srand((unsigned) time(&t));
-    room=rand()%4;
+    room=random2()%4;
     printf("room=%" PRIu8 "",room);
     return 1;
   }
-  if(row>=MAX_ROWS || room<0)
+  if(rowOutOfBound(row))
   {
-    time_t t;
-    srand((unsigned) time(&t));
-    row=rand()%10;
+    row=random2()%10;
     printf("row=%" PRIu8 "",row);
     return 2;
   }
-  if(column>=MAX_COLUMNS || column<0)
+  if(columnOutOfBound(column))
   {
-      time_t t;
-      srand((unsigned) time(&t));
-      column=rand()%12;
+      column=random2()%12;
       printf("column=%" PRIu8 "",column);
       return 3;
   }
@@ -36,32 +58,30 @@ uint8_t helpFreeOnePlace(uint8_t room,uint8_t row,uint8_t column)
 
 uint8_t helpTakeOnePlace(uint8_t room,uint8_t row,uint8_t column)
 {
-  if (room>=MAX_HALLS || room<0)
+  if (roomOutOfBound(room))
   {
-    time_t t;
-    srand((unsigned) time(&t));
-    room=rand()%4;
+    room=random2()%4;
     printf("room=%" PRIu8 "",room);
     return 1;
   }
-  if(row>=MAX_ROWS || room<0)
+  if(rowOutOfBound(row))
   {
-    time_t t;
-    srand((unsigned) time(&t));
-    row=rand()%10;
+    row=random2()%10;
     printf("row=%" PRIu8 "",row);
     return 2;
   }
-  if(column>=MAX_COLUMNS || column<0)
+  if(columnOutOfBound(column))
   {
-      time_t t;
-      srand((unsigned) time(&t));
-      column=rand()%12;
+      column=random2()%12;
       printf("column=%" PRIu8 "",column);
       return 3;
   }
   hall[room][row][column]=TAKEN;
 }
+
+TEST_GROUP(HallTestsTake);
+TEST_GROUP(HallTestsFree);
+
 TEST_GROUP_RUNNER(HallTestsTake)
 {
   RUN_TEST_CASE(HallTestsTake,TestInitHall);

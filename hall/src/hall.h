@@ -17,5 +17,7 @@ void takeOnePlace(uint8_t,uint8_t,uint8_t);
 void takeAllPlaces();
 void freeOnePlace(uint8_t,uint8_t,uint8_t);
 void freeAllPlaces();
+void freeRandomPlace();
+void takeRandomPlace();
 
 #endif

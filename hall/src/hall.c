@@ -1,5 +1,36 @@
 #include "hall.h"
 
+static int random2()
+{
+  time_t t;
+  srand((unsigned) time(&t));
+  return rand();
+}
+
+static int8_t roomOutOfBound(uint8_t room)
+{
+  if(room>=MAX_HALLS || room<0)
+  return 1;
+  else
+  return 0;
+}
+
+static int8_t rowOutOfBound(uint8_t row)
+{
+  if(row>=MAX_ROWS || row<0)
+  return 1;
+  else
+  return 0;
+}
+
+static int8_t columnOutOfBound(uint8_t column)
+{
+  if(column>=MAX_COLUMNS || column<0)
+  return 1;
+  else
+  return 0;
+}
+
 void initHall()
 {
   freeAllPlaces();
@@ -7,25 +38,19 @@ void initHall()
 
 void takeOnePlace(uint8_t room,uint8_t row,uint8_t column)
 {
-  if (room>=MAX_HALLS || room<0)
+  if (roomOutOfBound(room))
   {
-    time_t t;
-    srand((unsigned) time(&t));
-    room=rand()%4;
+    room=random2()%4;
     printf("room=%" PRIu8 "",room);
   }
-  if(row>=MAX_ROWS || room<0)
+  if(rowOutOfBound(row))
   {
-    time_t t;
-    srand((unsigned) time(&t));
-    row=rand()%10;
+    row=random2()%10;
     printf("row=%" PRIu8 "",row);
   }
-  if(column>=MAX_COLUMNS || column<0)
+  if(columnOutOfBound(column))
   {
-      time_t t;
-      srand((unsigned) time(&t));
-      column=rand()%12;
+      column=random2()%12;
       printf("column=%" PRIu8 "",column);
   }
   hall[room][row][column]=TAKEN;
@@ -42,25 +67,19 @@ void takeAllPlaces()
 
 void freeOnePlace(uint8_t room,uint8_t row,uint8_t column)
 {
-  if (room>=MAX_HALLS || room<0)
+  if (roomOutOfBound(room))
   {
-    time_t t;
-    srand((unsigned) time(&t));
-    room=rand()%4;
+    room=random2()%4;
     printf("room=%" PRIu8 "",room);
   }
-  if(row>=MAX_ROWS || room<0)
+  if(rowOutOfBound(row))
   {
-    time_t t;
-    srand((unsigned) time(&t));
-    row=rand()%10;
+    row=random2()%10;
     printf("row=%" PRIu8 "",row);
   }
-  if(column>=MAX_COLUMNS || column<0)
+  if(columnOutOfBound(column))
   {
-      time_t t;
-      srand((unsigned) time(&t));
-      column=rand()%12;
+      column=random2()%12;
       printf("column=%" PRIu8 "",column);
   }
   hall[room][row][column]=FREE;
