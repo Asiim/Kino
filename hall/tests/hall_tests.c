@@ -2,11 +2,11 @@
 #include "../../unity/unity_fixture.h"
 #include "../src/hall.h"
 
-static int random2()
+static int random2(int i)
 {
   time_t t;
   srand((unsigned) time(&t));
-  return rand();
+  return rand()%i;
 }
 
 static int8_t roomOutOfBound(uint8_t room)
@@ -33,50 +33,62 @@ static int8_t columnOutOfBound(uint8_t column)
   return 0;
 }
 
-uint8_t helpFreeOnePlace(uint8_t room,uint8_t row,uint8_t column)
+static uint8_t helpFreeOnePlace(uint8_t room,uint8_t row,uint8_t column)
 {
   if (roomOutOfBound(room))
   {
-    room=random2()%4;
-    printf("room=%" PRIu8 "",room);
+    room=random2(MAX_HALLS);
+    printf("room=%" PRIu8,room);
     return 1;
   }
   if(rowOutOfBound(row))
   {
-    row=random2()%10;
-    printf("row=%" PRIu8 "",row);
+    row=random2(MAX_ROWS);
+    printf("row=%" PRIu8,row);
     return 2;
   }
   if(columnOutOfBound(column))
   {
-      column=random2()%12;
-      printf("column=%" PRIu8 "",column);
+      column=random2(MAX_COLUMNS);
+      printf("column=%" PRIu8,column);
       return 3;
   }
   hall[room][row][column]=FREE;
 }
 
-uint8_t helpTakeOnePlace(uint8_t room,uint8_t row,uint8_t column)
+static uint8_t helpTakeOnePlace(uint8_t room,uint8_t row,uint8_t column)
 {
   if (roomOutOfBound(room))
   {
-    room=random2()%4;
-    printf("room=%" PRIu8 "",room);
+    room=random2(MAX_HALLS);
+    printf("room=%" PRIu8,room);
     return 1;
   }
   if(rowOutOfBound(row))
   {
-    row=random2()%10;
-    printf("row=%" PRIu8 "",row);
+    row=random2(MAX_ROWS);
+    printf("row=%" PRIu8,row);
     return 2;
   }
   if(columnOutOfBound(column))
   {
-      column=random2()%12;
-      printf("column=%" PRIu8 "",column);
+      column=random2(MAX_COLUMNS);
+      printf("column=%" PRIu8,column);
       return 3;
   }
   hall[room][row][column]=TAKEN;
+}
+
+static int8_t helpTakeRandomPlace()
+{
+  takeRandomPlace();
+  return 0;
+}
+
+static int8_t helpFreeRandomPlace()
+{
+  freeRandomPlace();
+  return 0;
 }
 
 TEST_GROUP(HallTestsTake);
@@ -90,6 +102,8 @@ TEST_GROUP_RUNNER(HallTestsTake)
   RUN_TEST_CASE(HallTestsTake,TestTakeHallOutOfBounds);
   RUN_TEST_CASE(HallTestsTake,TestTakeRowOutOfBounds);
   RUN_TEST_CASE(HallTestsTake,TestTakeColumnOutOfBounds);
+  RUN_TEST_CASE(HallTestsTake,TestTakeRandomPlace);
+  RUN_TEST_CASE(HallTestsTake,TestPlaceAlreadyTaken);
 }
 TEST_GROUP_RUNNER(HallTestsFree)
 {
@@ -98,6 +112,8 @@ TEST_GROUP_RUNNER(HallTestsFree)
   RUN_TEST_CASE(HallTestsFree,TestFreeHallOutOfBounds);
   RUN_TEST_CASE(HallTestsFree,TestFreeRowOutOfBounds);
   RUN_TEST_CASE(HallTestsFree,TestFreeColumnOutOfBounds);
+  RUN_TEST_CASE(HallTestsFree,TestFreeRandomPlace);
+  RUN_TEST_CASE(HallTestsFree,TestPlaceAlreadyFree);
 }
 
 TEST_SETUP(HallTestsTake)
@@ -173,4 +189,26 @@ TEST(HallTestsTake,TestTakeRowOutOfBounds)
 TEST(HallTestsTake,TestTakeColumnOutOfBounds)
 {
   TEST_ASSERT_EQUAL_INT8(3,helpTakeOnePlace(2,3,13));
+}
+
+TEST(HallTestsTake,TestTakeRandomPlace)
+{
+  TEST_ASSERT_EQUAL_INT8(0,helpTakeRandomPlace());
+}
+
+TEST(HallTestsFree,TestFreeRandomPlace)
+{
+  TEST_ASSERT_EQUAL_INT8(0,helpFreeRandomPlace());
+}
+
+TEST(HallTestsTake,TestPlaceAlreadyTaken)
+{
+  takeAllPlaces();
+  TEST_ASSERT_EQUAL_INT8(1,takeOnePlace(0,0,0));
+}
+
+TEST(HallTestsFree,TestPlaceAlreadyFree)
+{
+  freeAllPlaces();
+  TEST_ASSERT_EQUAL_INT8(1,freeOnePlace(0,0,0));
 }

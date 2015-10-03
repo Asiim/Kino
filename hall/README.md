@@ -2,14 +2,14 @@ Hall tests
 
 - ~~Set all places free on start~~
 - Take one place
-  - Take Random Place
+  - ~~Take Random Place~~
   - ~~Take Place out of bounds~~
     - ~~Take Room out of bounds~~
     - ~~Take Row out of bounds~~
     - ~~Take Coulumn out of bounds~~
   - Place already taken
 - Free one place
-  - Free Random Place
+  - ~~Free Random Place~~
   - ~~Free Place out of bounds~~
     - ~~Free Room out of bounds~~
     - ~~Free Row out of bounds~~

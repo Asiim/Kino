@@ -13,11 +13,11 @@
 char hall[MAX_HALLS][MAX_ROWS][MAX_COLUMNS];
 
 void initHall();
-void takeOnePlace(uint8_t,uint8_t,uint8_t);
+int8_t takeOnePlace(uint8_t,uint8_t,uint8_t);
 void takeAllPlaces();
-void freeOnePlace(uint8_t,uint8_t,uint8_t);
+int8_t freeOnePlace(uint8_t,uint8_t,uint8_t);
 void freeAllPlaces();
-void freeRandomPlace();
 void takeRandomPlace();
+void freeRandomPlace();
 
 #endif
