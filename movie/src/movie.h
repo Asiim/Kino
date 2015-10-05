@@ -14,10 +14,14 @@ typedef struct movie
   char name[MAX_NAME_LENGTH];
   char* termin[MAX_TERMIN_LENGTH];
   uint8_t hall;
+  uint8_t numberOfMovies;
 } MOVIE;
 
-MOVIE* initMovie();
+MOVIE* initMovie(MOVIE**);
 int8_t insertName(MOVIE*,char*);
 int8_t insertTermin(MOVIE*,char*);
 int8_t insertHall(MOVIE*,int8_t);
+void freeMovie(MOVIE**);
+MOVIE* initMoreMovies(MOVIE**,int8_t);
+
 #endif

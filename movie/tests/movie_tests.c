@@ -21,15 +21,18 @@ TEST_GROUP_RUNNER(movieAdminTest)
   RUN_TEST_CASE (movieAdminTest, TestInsertTerminIrregular);
   RUN_TEST_CASE (movieAdminTest, TestInsertHall);
   RUN_TEST_CASE (movieAdminTest, TestInsertHallOutOfBounds);
+  RUN_TEST_CASE (movieAdminTest, TestFreeMovie);
+  RUN_TEST_CASE (movieAdminTest, TestAllocateMoreMovies);
 }
 
 TEST_SETUP(movieAdminTest)
 {
-  film = initMovie();
+  initMovie(&film);
 }
 
 TEST_TEAR_DOWN(movieAdminTest)
 {
+  freeMovie(&film);
 }
 
 TEST(movieAdminTest, TestAllocateMovie)
@@ -39,7 +42,6 @@ TEST(movieAdminTest, TestAllocateMovie)
 
 TEST(movieAdminTest,TestInsertName)
 {
-
   TEST_ASSERT_EQUAL_INT(0, insertName(film,"film 1"));
 }
 
@@ -96,4 +98,17 @@ TEST(movieAdminTest,TestInsertHall)
 TEST(movieAdminTest,TestInsertHallOutOfBounds)
 {
   TEST_ASSERT_EQUAL_INT(1,insertHall(film,5));
+}
+
+
+TEST(movieAdminTest,TestFreeMovie)
+{
+  TEST_ASSERT_TRUE(film);
+}
+
+TEST(movieAdminTest,TestAllocateMoreMovies)
+{
+  freeMovie(&film);
+  initMoreMovies(&film,5);
+  TEST_ASSERT_EQUAL_INT(72*5,sizeof(*film)*film->numberOfMovies);
 }

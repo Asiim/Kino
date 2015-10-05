@@ -56,9 +56,36 @@ static int8_t hallIstaken(MOVIE* movie,int8_t hall)
     return 0;
 }
 
-MOVIE* initMovie()
+static int8_t noMovie(MOVIE** movie)
 {
-  return (MOVIE*)malloc (sizeof(MOVIE));
+  if((*movie)==NULL || (*movie)->numberOfMovies==0)
+  return 1;
+  else
+  return 0;
+}
+
+
+MOVIE* initMovie(MOVIE** movie)
+{
+  if (noMovie(movie))
+  {
+    (*movie)=(MOVIE*)malloc(sizeof(MOVIE));
+    (*movie)->numberOfMovies=1;
+  }
+  else
+  if (!noMovie(movie))
+  {
+      (*movie)->numberOfMovies++;
+      (*movie)=(MOVIE*)realloc((*movie),(*movie)->numberOfMovies*sizeof(MOVIE));
+  }
+  if ((*movie)!=NULL)
+  {
+      return (*movie);
+  }
+  else
+  {
+      return -123;
+  }
 }
 
 int8_t insertName(MOVIE* movie, char* name)
@@ -119,4 +146,19 @@ int8_t insertHall(MOVIE* movie,int8_t hall)
     return 0;
   else
     return 2;
+}
+
+void freeMovie(MOVIE** movie)
+{
+  (*movie)->numberOfMovies=0;
+  free(*movie);
+}
+
+MOVIE* initMoreMovies(MOVIE** movie,int8_t number)
+{
+  int i;
+  for(i=0;i<number;i++)
+  {
+    initMovie(movie);
+  }
 }
