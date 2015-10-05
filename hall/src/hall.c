@@ -9,7 +9,7 @@ static int random2(int i)
 
 static void randomPlace(char a)
 {
-  hall[random2(MAX_HALLS)][random2(MAX_ROWS)][random2(MAX_COLUMNS)]=a;
+  hall[random2(MAX_HALLS)].chair[random2(MAX_ROWS)][random2(MAX_COLUMNS)]=a;
 }
 
 static int8_t roomOutOfBound(uint8_t room)
@@ -79,7 +79,7 @@ static int8_t placesAreFree(int8_t n,int8_t row, int8_t column,int8_t room)
     }
     if (column+place-checkedplace<MAX_COLUMNS)
     {
-      if(hall[room][row][column+place-checkedplace]==FREE)
+      if(hall[room].chair[row][column+place-checkedplace]==FREE)
       suma+=0;
       else
       suma+=1;
@@ -104,7 +104,7 @@ static int8_t placesAreTaken(int8_t n,int8_t row, int8_t column,int8_t room)
     }
     if (column+place-checkedplace<MAX_COLUMNS)
     {
-      if(hall[room][row][column+place-checkedplace]==TAKEN)
+      if(hall[room].chair[row][column+place-checkedplace]==TAKEN)
       suma+=0;
       else
       suma+=1;
@@ -138,13 +138,13 @@ int8_t takeOnePlace(uint8_t room,uint8_t row,uint8_t column)
       column=random2(MAX_COLUMNS);
       printf("column=%" PRIu8,column);
   }
-  if (hall[room][row][column]==TAKEN)
+  if (hall[room].chair[row][column]==TAKEN)
   {
     return 1;
   }
   else
   {
-    hall[room][row][column]=TAKEN;
+    hall[room].chair[row][column]=TAKEN;
     return 0;
   }
 }
@@ -175,13 +175,13 @@ int8_t freeOnePlace(uint8_t room,uint8_t row,uint8_t column)
       column=random2(MAX_COLUMNS);
       printf("column=%" PRIu8,column);
   }
-  if (hall[room][row][column]==FREE)
+  if (hall[room].chair[row][column]==FREE)
   {
     return 1;
   }
   else
   {
-    hall[room][row][column]=FREE;
+    hall[room].chair[row][column]=FREE;
     return 0;
   }
 }

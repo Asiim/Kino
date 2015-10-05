@@ -53,7 +53,7 @@ static uint8_t helpFreeOnePlace(uint8_t room,uint8_t row,uint8_t column)
       printf("column=%" PRIu8,column);
       return 3;
   }
-  hall[room][row][column]=FREE;
+  hall[room].chair[row][column]=FREE;
 }
 
 static uint8_t helpTakeOnePlace(uint8_t room,uint8_t row,uint8_t column)
@@ -76,7 +76,7 @@ static uint8_t helpTakeOnePlace(uint8_t room,uint8_t row,uint8_t column)
       printf("column=%" PRIu8,column);
       return 3;
   }
-  hall[room][row][column]=TAKEN;
+  hall[room].chair[row][column]=TAKEN;
 }
 
 static int8_t helpTakeRandomPlace()
@@ -140,31 +140,31 @@ TEST_TEAR_DOWN(HallTestsFree)
 
 TEST(HallTestsTake,TestInitHall)
 {
-  TEST_ASSERT_EQUAL_INT8(FREE,hall[0][5][4]);
+  TEST_ASSERT_EQUAL_INT8(FREE,hall[0].chair[5][4]);
 }
 
 TEST(HallTestsTake,TestTakeOnePlace)
 {
   takeOnePlace(0,1,2);
-  TEST_ASSERT_EQUAL_INT8(TAKEN,hall[0][1][2]);
+  TEST_ASSERT_EQUAL_INT8(TAKEN,hall[0].chair[1][2]);
 }
 
 TEST(HallTestsTake,TestTakeAllPlaces)
 {
   takeAllPlaces();
-  TEST_ASSERT_EQUAL_INT8(TAKEN,hall[3][9][11]);
+  TEST_ASSERT_EQUAL_INT8(TAKEN,hall[3].chair[9][11]);
 }
 
 TEST(HallTestsFree,TestFreeOnePlace)
 {
   freeOnePlace(3,3,3);
-  TEST_ASSERT_EQUAL_INT8(FREE,hall[3][3][3]);
+  TEST_ASSERT_EQUAL_INT8(FREE,hall[3].chair[3][3]);
 }
 
 TEST(HallTestsFree,TestFreeAllPlaces)
 {
   freeAllPlaces();
-  TEST_ASSERT_EQUAL_INT8(FREE,hall[0][0][0]);
+  TEST_ASSERT_EQUAL_INT8(FREE,hall[0].chair[0][0]);
 }
 
 TEST(HallTestsFree,TestFreeHallOutOfBounds)
