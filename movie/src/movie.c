@@ -1,6 +1,6 @@
 #include "movie.h"
 
-static int ifFormatIsRight(char* termin)
+static int8_t ifFormatIsRight(char* termin)
 {
   if (termin[0]>='0' && termin[0]<='2' && termin[1]>='0' && termin[1]<='9' && termin[2]==':' && termin[3]>='0' && termin[3]<='5' && termin[4]>='0' && termin[4]<='9')
   return 1;
@@ -8,7 +8,7 @@ static int ifFormatIsRight(char* termin)
   return 0;
 }
 
-static int ifTerminIsOutOfBound(char* termin)
+static int8_t ifTerminIsOutOfBound(char* termin)
 {
   if (strcmp(termin,"00:00")>=0 && strcmp(termin,"12:00")<=0 || strcmp(termin,"24:00")>=0)
   return 1;
@@ -16,7 +16,7 @@ static int ifTerminIsOutOfBound(char* termin)
   return 0;
 }
 
-static int emptyTermin(char* termin)
+static int8_t emptyTermin(char* termin)
 {
   if(strcmp(termin,""))
   return 0;
@@ -24,7 +24,7 @@ static int emptyTermin(char* termin)
   return 1;
 }
 
-static int emptyName(char* name)
+static int8_t emptyName(char* name)
 {
   if(strcmp(name,""))
   return 0;
@@ -32,7 +32,7 @@ static int emptyName(char* name)
   return 1;
 }
 
-static int nameToLong(char* name)
+static int8_t nameToLong(char* name)
 {
   if (strlen(name)>(MAX_NAME_LENGTH-1))
   return 1;
@@ -44,7 +44,7 @@ MOVIE* initMovie()
   return (MOVIE*)malloc (sizeof(MOVIE));
 }
 
-int insertName(MOVIE* movie, char* name)
+int8_t insertName(MOVIE* movie, char* name)
 {
   if (emptyName(name))
   {
@@ -62,7 +62,7 @@ int insertName(MOVIE* movie, char* name)
   return 0;
 }
 
-int insertTermin(MOVIE* movie,char* termin)
+int8_t insertTermin(MOVIE* movie,char* termin)
 {
   if (emptyTermin(termin))
   {
@@ -86,4 +86,20 @@ int insertTermin(MOVIE* movie,char* termin)
   {
     return 3;
   }
+}
+
+int8_t insertHall(MOVIE* movie,int8_t hall)
+{
+  if (hall>=4 || hall<0)
+  {
+    return 1;
+  }
+  else
+  {
+    movie->hall=hall;
+  }
+  if (movie->hall==hall)
+    return 0;
+  else
+    return 2;
 }

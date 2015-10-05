@@ -1,5 +1,6 @@
 #ifndef _MOVIE_H
 #define _MOVIE_H
+#include "../../hall/src/hall.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -7,16 +8,16 @@
 #include <string.h>
 #define MAX_NAME_LENGTH 20
 #define MAX_TERMIN_LENGTH 5
-#define NUMBER_OF_HALLS 4
 
 typedef struct movie
 {
   char name[MAX_NAME_LENGTH];
   char* termin[MAX_TERMIN_LENGTH];
-  uint8_t hall[NUMBER_OF_HALLS];
+  uint8_t hall;
 } MOVIE;
 
 MOVIE* initMovie();
-int insertName(MOVIE*,char*);
-int insertTermin(MOVIE*,char*);
+int8_t insertName(MOVIE*,char*);
+int8_t insertTermin(MOVIE*,char*);
+int8_t insertHall(MOVIE*,int8_t);
 #endif

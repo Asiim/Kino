@@ -19,6 +19,8 @@ TEST_GROUP_RUNNER(movieAdminTest)
   RUN_TEST_CASE (movieAdminTest, TestInsertTerminOnOpen);
   RUN_TEST_CASE (movieAdminTest, TestInsertTerminOnClose);
   RUN_TEST_CASE (movieAdminTest, TestInsertTerminIrregular);
+  RUN_TEST_CASE (movieAdminTest, TestInsertHall);
+  RUN_TEST_CASE (movieAdminTest, TestInsertHallOutOfBounds);
 }
 
 TEST_SETUP(movieAdminTest)
@@ -84,4 +86,14 @@ TEST(movieAdminTest,TestInsertTerminOnOpen)
 TEST(movieAdminTest,TestInsertTerminIrregular)
 {
   TEST_ASSERT_EQUAL_INT(3,insertTermin(film,"2a:12"));
+}
+
+TEST(movieAdminTest,TestInsertHall)
+{
+  TEST_ASSERT_EQUAL_INT(0,insertHall(film,3));
+}
+
+TEST(movieAdminTest,TestInsertHallOutOfBounds)
+{
+  TEST_ASSERT_EQUAL_INT(1,insertHall(film,5));
 }

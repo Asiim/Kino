@@ -11,7 +11,9 @@ Move Admin Tests:
       - ~~Termin prije 12:00~~
     - ~~Termin unutar opsega~~
     - ~~Unos neregularnih znakova~~
-  - ~~Unesi salu za film~~
-    - ~~Sala van opsega~~
-    - ~~Sala unutar opsega~~
+  - Unesi salu za film
+    - Prazna sala
+    - Sala van opsega
+    - Sala unutar opsega
+    - Unos neregularnih znakova
   - Oslobodi memoriju
