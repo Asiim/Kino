@@ -39,6 +39,23 @@ static int8_t nameToLong(char* name)
   else
   return 0;
 }
+
+static int8_t hallIsOutOfBound(int8_t hall)
+{
+  if(hall>=4 || hall<0)
+    return 1;
+  else
+    return 0;
+}
+
+static int8_t hallIstaken(MOVIE* movie,int8_t hall)
+{
+  if(movie->hall == hall)
+    return 1;
+  else
+    return 0;
+}
+
 MOVIE* initMovie()
 {
   return (MOVIE*)malloc (sizeof(MOVIE));
@@ -90,7 +107,7 @@ int8_t insertTermin(MOVIE* movie,char* termin)
 
 int8_t insertHall(MOVIE* movie,int8_t hall)
 {
-  if (hall>=4 || hall<0)
+  if (hallIsOutOfBound(hall))
   {
     return 1;
   }
@@ -98,7 +115,7 @@ int8_t insertHall(MOVIE* movie,int8_t hall)
   {
     movie->hall=hall;
   }
-  if (movie->hall==hall)
+  if (hallIstaken(movie,hall))
     return 0;
   else
     return 2;
