@@ -4,8 +4,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <inttypes.h>
-
-COUNTER mainCounter;
+#include "../../movie/src/movie.h"
+#include "../../hall/src/hall.h"
+#define MAX_CARDS 50
 
 typedef struct counter
 {
@@ -14,6 +15,9 @@ typedef struct counter
   uint8_t* places;
 }COUNTER;
 
+COUNTER mainCounter;
+
 COUNTER initCounter();
+int8_t takeCards(int8_t);
 
 #endif

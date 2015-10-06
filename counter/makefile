@@ -1,8 +1,14 @@
 CC=gcc
 
-all: counter.o
+all: src tests build
 
-.PHONY: counter.o
+.PHONY: src tests build
 
-movie.o:
-	$(CC) -c counter.c -o ../build/counter.o
+src:
+	$(MAKE) -C src all
+
+tests:
+	$(MAKE) -C tests all
+
+build:
+	$(MAKE) -C build all
