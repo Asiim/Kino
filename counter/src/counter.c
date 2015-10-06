@@ -12,6 +12,7 @@ static int8_t nullCards()
 
 COUNTER initCounter()
 {
+  initHall();
   return mainCounter;
 }
 
