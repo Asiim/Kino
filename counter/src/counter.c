@@ -18,7 +18,7 @@ COUNTER initCounter()
 
 int8_t takeCards(int8_t number)
 {
-  if (number < 0 || number > MAX_CARDS)
+  if (number <= 0 || number > MAX_CARDS)
   {
     return -12;
   }

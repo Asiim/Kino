@@ -4,5 +4,5 @@ all: main.o
 
 .PHONY: main.o
 
-movie.o:
+main.o:
 	$(CC) -c main.c -o ../build/main.o

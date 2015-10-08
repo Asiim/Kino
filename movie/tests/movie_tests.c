@@ -2,8 +2,6 @@
 #include "../../unity/unity_fixture.h"
 #include "../src/movie.h"
 
-MOVIE* film;
-
 TEST_GROUP(movieAdminTest);
 
 TEST_GROUP_RUNNER(movieAdminTest)
@@ -23,92 +21,124 @@ TEST_GROUP_RUNNER(movieAdminTest)
   RUN_TEST_CASE (movieAdminTest, TestInsertHallOutOfBounds);
   RUN_TEST_CASE (movieAdminTest, TestFreeMovie);
   RUN_TEST_CASE (movieAdminTest, TestAllocateMoreMovies);
+  RUN_TEST_CASE (movieAdminTest, TestTakeMovie);
+  RUN_TEST_CASE (movieAdminTest, TestTakeWrongMovie);
+  RUN_TEST_CASE (movieAdminTest, TestTakeTermin);
+  RUN_TEST_CASE (movieAdminTest, TestTakeWrongTermin);
 }
 
 TEST_SETUP(movieAdminTest)
 {
-  initMovie(&film);
+  initMovie();
 }
 
 TEST_TEAR_DOWN(movieAdminTest)
 {
-  freeMovie(&film);
+  freeMovie();
 }
 
 TEST(movieAdminTest, TestAllocateMovie)
 {
-  TEST_ASSERT_TRUE(film != NULL);
+  TEST_ASSERT_TRUE(movies != NULL);
 }
 
 TEST(movieAdminTest,TestInsertName)
 {
-  TEST_ASSERT_EQUAL_INT(0, insertName(film,"film 1"));
+  TEST_ASSERT_EQUAL_INT(0, insertName("film 1"));
 }
 
 TEST(movieAdminTest,TestInsertEmptyName)
 {
-  TEST_ASSERT_EQUAL_INT(1,insertName(film,""));
+  TEST_ASSERT_EQUAL_INT(1,insertName(""));
 }
 
 TEST(movieAdminTest,TestInsertLongName)
 {
-  TEST_ASSERT_EQUAL_INT(0,insertName(film,"asimasimaimsiamsiams1234321234"));
+  TEST_ASSERT_EQUAL_INT(0,insertName("asimasimaimsiamsiams1234321234"));
 }
 
 TEST(movieAdminTest,TestInsertTermin)
 {
-  TEST_ASSERT_EQUAL_INT(0,insertTermin(film,"12:10"));
+  TEST_ASSERT_EQUAL_INT(0,insertTermin("12:10"));
 }
 
 TEST(movieAdminTest,TestInsertEmptyTermin)
 {
-  TEST_ASSERT_EQUAL_INT(1,insertTermin(film,""));
+  TEST_ASSERT_EQUAL_INT(1,insertTermin(""));
 }
 
 TEST(movieAdminTest,TestInsertTerminAfterClose)
 {
-  TEST_ASSERT_EQUAL_INT(2,insertTermin(film,"00:15"));
+  TEST_ASSERT_EQUAL_INT(2,insertTermin("00:15"));
 }
 
 TEST(movieAdminTest,TestInsertTerminBeforeOpen)
 {
-  TEST_ASSERT_EQUAL_INT(2,insertTermin(film,"10:15"));
+  TEST_ASSERT_EQUAL_INT(2,insertTermin("10:15"));
 }
 
 TEST(movieAdminTest,TestInsertTerminOnClose)
 {
-  TEST_ASSERT_EQUAL_INT(2,insertTermin(film,"12:00"));
+  TEST_ASSERT_EQUAL_INT(0,insertTermin("12:00"));
 }
 
 TEST(movieAdminTest,TestInsertTerminOnOpen)
 {
-  TEST_ASSERT_EQUAL_INT(2,insertTermin(film,"12:00"));
+  TEST_ASSERT_EQUAL_INT(0,insertTermin("12:00"));
 }
 
 TEST(movieAdminTest,TestInsertTerminIrregular)
 {
-  TEST_ASSERT_EQUAL_INT(3,insertTermin(film,"2a:12"));
+  TEST_ASSERT_EQUAL_INT(3,insertTermin("2a:12"));
 }
 
 TEST(movieAdminTest,TestInsertHall)
 {
-  TEST_ASSERT_EQUAL_INT(0,insertHall(film,3));
+  TEST_ASSERT_EQUAL_INT(0,insertHall(3));
 }
 
 TEST(movieAdminTest,TestInsertHallOutOfBounds)
 {
-  TEST_ASSERT_EQUAL_INT(1,insertHall(film,5));
+  TEST_ASSERT_EQUAL_INT(1,insertHall(5));
 }
 
 
 TEST(movieAdminTest,TestFreeMovie)
 {
-  TEST_ASSERT_TRUE(film);
+  TEST_ASSERT_TRUE(movies);
 }
 
 TEST(movieAdminTest,TestAllocateMoreMovies)
 {
-  freeMovie(&film);
-  initMoreMovies(&film,5);
-  TEST_ASSERT_EQUAL_INT(72*5,sizeof(*film)*film->numberOfMovies);
+  freeMovie();
+  initMoreMovies(5);
+  TEST_ASSERT_EQUAL_INT(sizeof(movies)*5,sizeof(movies)*movies->numberOfMovies);
+}
+
+TEST(movieAdminTest,TestTakeMovie)
+{
+    insertName("film1");
+    TEST_ASSERT_EQUAL_INT8(0,takeMovie("film1"));
+}
+
+TEST(movieAdminTest,TestTakeWrongMovie)
+{
+    insertName("film1");
+    TEST_ASSERT_EQUAL_INT8(1,takeMovie("film3"));
+}
+
+TEST(movieAdminTest,TestTakeTermin)
+{
+    insertName("film1");
+    takeMovie("film1");
+    insertTermin("12:00");
+    TEST_ASSERT_EQUAL_INT8(0,takeTermin("12:00"));
+}
+
+TEST(movieAdminTest,TestTakeWrongTermin)
+{
+    insertName("film1");
+    takeMovie("film1");
+    insertTermin("12:00");
+    TEST_ASSERT_EQUAL_INT8(1,takeTermin("12:12"));
 }

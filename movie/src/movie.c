@@ -10,7 +10,7 @@ static int8_t ifFormatIsRight(char* termin)
 
 static int8_t ifTerminIsOutOfBound(char* termin)
 {
-  if (strcmp(termin,"00:00")>=0 && strcmp(termin,"12:00")<=0 || strcmp(termin,"24:00")>=0)
+  if (strcmp(termin,"00:00")>0 && strcmp(termin,"12:00")<0 || strcmp(termin,"24:00")>=0)
   return 1;
   else
   return 0;
@@ -48,39 +48,40 @@ static int8_t hallIsOutOfBound(int8_t hall)
     return 0;
 }
 
-static int8_t hallIstaken(MOVIE* movie,int8_t hall)
+static int8_t hallIstaken(int8_t hall)
 {
-  if(movie->hall == hall)
+  if((movies+movies->currentMovie)->hall == hall)
     return 1;
   else
     return 0;
 }
 
-static int8_t noMovie(MOVIE** movie)
+static int8_t noMovie()
 {
-  if((*movie)==NULL || (*movie)->numberOfMovies==0)
+  if(movies==NULL || movies->numberOfMovies==0)
   return 1;
   else
   return 0;
 }
 
 
-MOVIE* initMovie(MOVIE** movie)
+MOVIE* initMovie()
 {
-  if (noMovie(movie))
+  if (noMovie())
   {
-    (*movie)=(MOVIE*)malloc(sizeof(MOVIE));
-    (*movie)->numberOfMovies=1;
+    movies=(MOVIE*)malloc(sizeof(MOVIE));
+    movies->numberOfMovies=1;
+    movies->currentMovie=0;
   }
   else
-  if (!noMovie(movie))
+  if (!noMovie())
   {
-      (*movie)->numberOfMovies++;
-      (*movie)=(MOVIE*)realloc((*movie),(*movie)->numberOfMovies*sizeof(MOVIE));
+      movies->numberOfMovies++;
+      movies=(MOVIE*)realloc(movies,movies->numberOfMovies*sizeof(MOVIE));
   }
-  if ((*movie)!=NULL)
+  if (movies!=NULL)
   {
-      return (*movie);
+      return movies;
   }
   else
   {
@@ -88,29 +89,27 @@ MOVIE* initMovie(MOVIE** movie)
   }
 }
 
-int8_t insertName(MOVIE* movie, char* name)
+int8_t insertName(char* name)
 {
   if (emptyName(name))
   {
-    printf("ERROR: Can't put empty name!");
     return 1;
   }
   else
   if (nameToLong(name))
   {
-    strncpy(movie->name,name,MAX_NAME_LENGTH-1);
+    strncpy((movies+movies->currentMovie)->name,name,MAX_NAME_LENGTH-1);
     return 0;
   }
   else
-  strcpy(movie->name,name);
+  strcpy((movies+movies->currentMovie)->name,name);
   return 0;
 }
 
-int8_t insertTermin(MOVIE* movie,char* termin)
+int8_t insertTermin(char* termin)
 {
   if (emptyTermin(termin))
   {
-    printf("You didnt enter a termin, please try again.");
     return 1;
   }
   else
@@ -122,7 +121,7 @@ int8_t insertTermin(MOVIE* movie,char* termin)
     }
     else
     {
-      strcpy(movie->termin, termin);
+      strcpy((movies+movies->currentMovie)->termin, termin);
       return 0;
     }
   }
@@ -132,7 +131,7 @@ int8_t insertTermin(MOVIE* movie,char* termin)
   }
 }
 
-int8_t insertHall(MOVIE* movie,int8_t hall)
+int8_t insertHall(int8_t hall)
 {
   if (hallIsOutOfBound(hall))
   {
@@ -140,25 +139,65 @@ int8_t insertHall(MOVIE* movie,int8_t hall)
   }
   else
   {
-    movie->hall=hall;
+    (movies+movies->currentMovie)->hall=hall;
   }
-  if (hallIstaken(movie,hall))
+  if (hallIstaken(hall))
     return 0;
   else
     return 2;
 }
 
-void freeMovie(MOVIE** movie)
+void freeMovie()
 {
-  (*movie)->numberOfMovies=0;
-  free(*movie);
+  movies->numberOfMovies=0;
+  movies->currentMovie=0;
+  free (movies);
 }
 
-MOVIE* initMoreMovies(MOVIE** movie,int8_t number)
+MOVIE* initMoreMovies(int8_t number)
 {
   int i;
   for(i=0;i<number;i++)
   {
-    initMovie(movie);
+    initMovie();
   }
+}
+
+void listMovies()
+{
+  int8_t i;
+  for (i=0;i<movies->numberOfMovies;i++)
+    printf("Movie %"PRId8".:  %s\n",i+1,(movies+i)->name);
+}
+
+void nextMovie()
+{
+  movies->currentMovie++;
+}
+
+void prevMovie()
+{
+  if (movies->currentMovie>0)
+  movies->currentMovie--;
+}
+
+int8_t takeMovie(char* name)
+{
+  int8_t numberOfMovie;
+  for (numberOfMovie=0;numberOfMovie<movies->numberOfMovies;numberOfMovie++)
+    if (strcmp(name,(movies+numberOfMovie)->name)==0)
+    {
+      currentMovies=movies+numberOfMovie;
+      return 0;
+    }
+  return 1;
+}
+
+int8_t takeTermin(char* termin)
+{
+  int8_t numberOfTermin;
+  for (numberOfTermin=0;numberOfTermin<1;numberOfTermin++)
+    if (strcmp(termin,currentMovies->termin)==0)
+      return 0;
+  return 1;
 }
