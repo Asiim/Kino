@@ -167,7 +167,7 @@ void listMovies()
 {
   int8_t i;
   for (i=0;i<movies->numberOfMovies;i++)
-    printf("Movie %"PRId8".:  %s\n",i+1,(movies+i)->name);
+    printf("Movie %"PRId8":  %s\n",i+1,(movies+i)->name);
 }
 
 void nextMovie()

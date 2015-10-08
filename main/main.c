@@ -61,6 +61,15 @@ void insertMovie(int8_t brojFilma)
   nextMovie();
 }
 
+
+void takePlacesForMovie(int8_t numberOfPlaces)
+{
+  if (takeMorePlaces(numberOfPlaces)==0)
+    printf("Places are taken, you can watch now.\n");
+  else
+    printf("Places couldn't be taken, please check the code.\n");
+}
+
 void takeCardsForMovie()
 {
   int8_t brojKarata=0;
@@ -86,6 +95,38 @@ void takeCardsForMovie()
     if(takeTermin(termin)==1)
       printf("There is no such termin for this movie, please try again.\n");
   }while(takeTermin(termin)==1);
+  takePlacesForMovie(brojKarata);
+}
+
+void poruke(int8_t poruka)
+{
+  switch (poruka)
+   {
+    case 1:
+    printf("Unesite:\n~~~~ '1' za ADMIN ~~~~\n~~~~ '2' za USER  ~~~~\n~~~~ '0' za EXIT  ~~~~\nUnos: ");
+    break;
+    case 2:
+    printf("Unesite:\n~~~~ '1' za LISTU FILMOVA ~~~~\n~~~~ '2' za GLEDANJE      ~~~~\n~~~~ '0' za EXIT          ~~~~\n");
+    break;
+    case 3:
+    printf("Unijeli ste nevažeći broj, pokušajte ponovo.\n\n");
+    break;
+    default:
+    return;
+  }
+}
+
+void sifra()
+{
+  char sifra[10];
+  do
+  {
+    printf("Unesite sifru: ");
+    scanf("%s",sifra);
+    if (strcmp(sifra,"admin")!=0)
+      printf("Pogresna sifra, pokusajte ponovo.\n\n");
+  }while(strcmp(sifra,"admin")!=0);
+  return;
 }
 
 int main()
@@ -94,12 +135,13 @@ system("clear");
 int8_t switcher1=3,switcher2=3,brojFilma,brojFilmova;
 while (switcher1!=EXIT)
 {
-printf("Unesite:\n~~~~ '1' za ADMIN ~~~~\n~~~~ '2' za USER  ~~~~\n~~~~ '0' za EXIT  ~~~~\nUnos: ");
+poruke(1);
 scanf("%"SCNd8,&switcher1);
 system("clear");
 switch (switcher1)
  {
     case ADMIN:
+    sifra();
     printf("Koliko filmova želite unijeti: ");
     scanf("%"SCNd8,&brojFilmova);
     initMoreMovies(brojFilmova);
@@ -110,12 +152,11 @@ switch (switcher1)
       printf("\n-------------------------------------------------\n\n");
     }
     break;
-
     case USER:
-//----------------------------------------------------------------------------------------------
+    initCounter();
     while (switcher2!=EXIT)
     {
-      printf("Unesite:\n~~~~ '1' za LISTU FILMOVA ~~~~\n~~~~ '2' za GLEDANJE      ~~~~\n~~~~ '0' za EXIT          ~~~~\n");
+      poruke(2);
       scanf("%"SCNd8,&switcher2);
       system("clear");
       switch(switcher2)
@@ -123,29 +164,25 @@ switch (switcher1)
         case LISTA_FILMOVA:
         listMovies();
         break;
-
         case GLEDANJE:
           takeCardsForMovie();
         break;
-
         case EXIT:
-        return;
+        printf("Program se gasi.");
+        usleep(1000000);
         default:
-        printf("Unijeli ste nevažeći broj, pokušajte ponovo.\n\n");
+        poruke(3);
       }
     }
     break;
-//--------------------------------------------------------------------------------------
     case EXIT:
-    printf("Program se gasi.");
+    printf("Program se gasi.\n");
+    usleep(1000000);
     break;
-
     default:
-    printf("Unijeli ste nevažeći broj, pokušajte ponovo.\n\n");
-
+    poruke(3);
 }
 }
-return 0;
-
 system("clear");
+return 0;
 }
